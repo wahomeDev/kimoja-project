@@ -1,10 +1,21 @@
 // ================= STORAGE =================
+let paymentHistory = JSON.parse(
+  localStorage.getItem("kimoja_payment_history")
+) || [];
+
 const STORAGE_KEY = "kimoja_elite_data";
 
 // ================= WORKERS =================
 const workers = [
-  "Ngoronyo", "Sherif", "Scorpion", "Achievers", "Mwea"
+  { id: "ngoronyo", name: "Ngoronyo", phone: "", total: 0 },
+  { id: "sherif", name: "Sherif", phone: "", total: 0 },
+  { id: "scorpion", name: "Scorpion", phone: "", total: 0 },
+  { id: "achievers", name: "Achievers", phone: "", total: 0 },
+  { id: "mwea", name: "Mwea", phone: "", total: 0 }
 ];
+
+  
+
 
 // ================= DATA =================
 let trucks = [];
@@ -33,7 +44,11 @@ function addTruck() {
   const truck = {
     plate,
     amount,
-    attendance: workers.map(() => false)
+    attendance: workers.map(w => ({
+  workerId: w.id,
+  present: false
+}))
+
   };
 
   trucks.push(truck);
@@ -49,18 +64,20 @@ function renderTable() {
   const table = document.getElementById("workTable");
   table.innerHTML = "";
 
+  // Header
   let header = "<tr><th>Truck</th>";
-  workers.forEach(w => header += `<th>${w}</th>`);
+  workers.forEach(w => header += `<th>${w.name}</th>`);
   header += "</tr>";
   table.innerHTML += header;
 
+  // Rows
   trucks.forEach((t, i) => {
     let row = `<tr><td>${t.plate}<br>Ksh ${t.amount}</td>`;
 
     t.attendance.forEach((a, j) => {
       row += `<td>
         <input type="checkbox"
-          ${a ? "checked" : ""}
+          ${a.present ? "checked" : ""}
           onchange="toggle(${i},${j})">
       </td>`;
     });
@@ -72,10 +89,14 @@ function renderTable() {
   calculateTotals();
 }
 
+
 // ================= TOGGLE =================
 function toggle(truckIndex, workerIndex) {
-  trucks[truckIndex].attendance[workerIndex] =
-    !trucks[truckIndex].attendance[workerIndex];
+  const record = trucks[truckIndex].attendance[workerIndex];
+record.present = !record.present;
+saveData();
+calculateTotals();
+
 
   saveData();
   calculateTotals();
@@ -83,21 +104,24 @@ function toggle(truckIndex, workerIndex) {
 
 // ================= TOTALS =================
 function calculateTotals() {
-  let totals = workers.map(() => 0);
+  workers.forEach(w => w.total = 0);
 
-  trucks.forEach(t => {
-    const present = t.attendance.filter(a => a).length;
-    if (present === 0) return;
+  trucks.forEach(truck => {
+    const presentWorkers = truck.attendance.filter(a => a.present);
+    if (presentWorkers.length === 0) return;
 
-    const share = t.amount / present;
-    t.attendance.forEach((a, i) => {
-      if (a) totals[i] += share;
+    const share = truck.amount / presentWorkers.length;
+
+    presentWorkers.forEach(p => {
+      const worker = workers.find(w => w.id === p.workerId);
+      if (worker) worker.total += share;
     });
   });
 
   document.getElementById("totalsOutput").innerHTML =
-    workers.map((w, i) => `${w}: Ksh ${totals[i].toFixed(2)}`).join("<br>");
+    workers.map(w => `${w.name}: Ksh ${w.total.toFixed(2)}`).join("<br>");
 }
+
 
 // ================= RESET =================
 function resetCycle() {
@@ -110,3 +134,28 @@ function resetCycle() {
 
 // Initial render
 renderTable();
+// INITIAL LOAD
+renderTable();
+calculateTotals();
+
+function closePayCycle(cycleName) {
+  const snapshot = {
+    cycle: cycleName,
+    date: new Date().toLocaleDateString(),
+    workers: workers.map(w => ({
+      id: w.id,
+      name: w.name,
+      amount: w.total
+    }))
+  };
+
+  paymentHistory.push(snapshot);
+
+  localStorage.setItem(
+    "kimoja_payment_history",
+    JSON.stringify(paymentHistory)
+  );
+
+  resetCycle();
+}
+
