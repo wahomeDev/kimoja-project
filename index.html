@@ -40,16 +40,15 @@
 
 <section class="payment-history">
   <h2>Payment History 💼</h2>
-  <div id="paymentHistoryContainer">
-    <p>No payment history yet.</p>
-  </div>
+  <div id="paymentHistoryContainer"><p>No payment history yet.</p></div>
   <button onclick="toggleHistory()">Show/Hide History</button>
+  <button onclick="exportPaymentHistoryCSV()">Export Payment History CSV</button>
 </section>
 
 <section class="graph">
-  <h2>Worker Earnings</h2>
-  <button id="toggleChartBtn">Show Cumulative Earnings</button>
+  <h2>Daily Earnings</h2>
   <canvas id="earningsChart"></canvas>
+  <button id="toggleChartBtn">Show Cumulative Earnings</button>
 </section>
 
 <section class="finance">

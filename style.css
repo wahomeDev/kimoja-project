@@ -1,88 +1,254 @@
+/* ================= GLOBAL ================= */
 body {
-  font-family: system-ui, sans-serif;
-  background: #121212;
-  color: #f5f5f5;
+  font-family: Arial, sans-serif;
   margin: 0;
+  padding: 0 20px;
+  background-color: #f5f5f5;
+  color: #333;
 }
 
 header {
-  background: url("images/workers.jpg") center/cover;
-  padding: 40px;
   text-align: center;
+  padding: 20px 0;
+  background-color: #1f2937;
+  color: #fff;
 }
 
+header h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+header p {
+  margin: 5px 0 0;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+/* ================= SECTIONS ================= */
 section {
-  padding: 20px;
-  margin: 20px;
-  background: #1e1e1e;
-  border-radius: 12px;
+  margin: 20px 0;
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-button {
-  background: #e09f3e;
+h2 {
+  margin-top: 0;
+  font-size: 20px;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 5px;
+}
+
+/* ================= TRUCK ENTRY ================= */
+.truck-entry input {
+  padding: 8px;
+  margin-right: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 150px;
+}
+
+.truck-entry button {
+  padding: 8px 15px;
   border: none;
-  padding: 10px 16px;
-  font-weight: bold;
+  border-radius: 5px;
+  background-color: #4CAF50;
+  color: #fff;
   cursor: pointer;
 }
 
+.truck-entry button:hover {
+  background-color: #45a049;
+}
+
+/* ================= TABLE ================= */
 table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 10px;
 }
 
-td, th {
-  border: 1px solid #333;
-  padding: 8px;
+th, td {
+  padding: 10px;
   text-align: center;
-}
-.payment-history button {
-  margin-top: 5px;
-  padding: 5px 10px;
-  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-size: 14px;
 }
 
-.history-card {
-  border: 1px solid #ccc;
-  padding: 10px 15px;
-  margin: 10px 0;
-  border-radius: 8px;
-  background-color: #f9f9f9;
+th {
+  background-color: #1f2937;
+  color: #fff;
 }
 
-.history-card h3 {
-  margin: 0 0 5px 0;
-  font-size: 1.1em;
+/* ================= COLOR CLASSES ================= */
+.top-earner {
+  background-color: #4CAF50;
+  color: #fff;
 }
 
-.history-card ul {
-  margin: 0;
-  padding-left: 20px;
+.mid-earner {
+  background-color: #FFEB3B;
+  color: #333;
 }
+
+.low-earner {
+  background-color: #F44336;
+  color: #fff;
+}
+
 .zero-attendance {
-  background-color: #ffe5e5;
+  background-color: #ccc !important;
+  color: #666;
+}
+
+/* ================= TOTALS ================= */
+.totals div {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* ================= PAYMENT HISTORY ================= */
+.payment-history button {
+  margin-top: 10px;
+  margin-right: 10px;
+  padding: 6px 12px;
+  background-color: #2196F3;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.payment-history button:hover {
+  background-color: #1976D2;
 }
 
 .history-card {
-  border: 1px solid #ccc;
-  padding: 10px 15px;
-  margin: 10px 0;
+  border: 1px solid #ddd;
   border-radius: 8px;
-  background-color: #f9f9f9;
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #fafafa;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
 }
 
 .history-card h3 {
   margin: 0 0 5px 0;
-  font-size: 1.1em;
+  font-size: 16px;
 }
 
 .history-card ul {
+  list-style-type: none;
+  padding-left: 0;
   margin: 0;
-  padding-left: 20px;
 }
 
-.payment-history button {
+.history-card li {
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+
+/* ================= CHART ================= */
+canvas {
+  width: 100% !important;
+  max-height: 400px;
+  margin-top: 10px;
+}
+
+/* ================= FINANCE ================= */
+.finance p {
+  font-style: italic;
+  margin: 5px 0;
+}
+
+.finance a {
+  display: inline-block;
   margin-top: 5px;
-  padding: 5px 10px;
+  color: #2196F3;
+  text-decoration: none;
+}
+
+.finance a:hover {
+  text-decoration: underline;
+}
+
+/* ================= FOOTER ================= */
+footer {
+  text-align: center;
+  margin: 20px 0;
+}
+
+footer button {
+  padding: 8px 20px;
+  border: none;
   border-radius: 5px;
+  background-color: #f44336;
+  color: #fff;
+  cursor: pointer;
+}
+
+footer button:hover {
+  background-color: #d32f2f;
+}
+/* ================= RESPONSIVE LAYOUT ================= */
+@media (max-width: 768px) {
+  table, thead, tbody, th, td, tr {
+    display: block;
+  }
+  
+  thead tr {
+    display: none; /* hide headers on mobile */
+  }
+
+  tr {
+    margin-bottom: 15px;
+    border-bottom: 2px solid #eee;
+  }
+
+  td {
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+
+  td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    font-weight: bold;
+    text-align: left;
+  }
+}
+
+/* ================= TOOLTIP ================= */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: auto;
+  max-width: 150px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 10;
+  bottom: 125%; 
+  left: 50%;
+  margin-left: -75px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 12px;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
 }
