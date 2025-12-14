@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>KIMOJA – ELITE Group</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header>
+  <h1>KIMOJA – ELITE GROUP</h1>
+  <p>Fair Work • Fair Pay • Transparency</p>
+</header>
+
+<section class="cycle">
+  <h2>Current Pay Cycle</h2>
+  <select id="cycle">
+    <option>Sat – Tue (Pay Wed)</option>
+    <option>Wed – Fri (Pay Sat)</option>
+  </select>
+</section>
+
+<section class="truck-entry">
+  <h2>Add Truck</h2>
+  <input type="text" id="plate" placeholder="Number Plate">
+  <input type="number" id="amount" placeholder="Truck Amount">
+  <button onclick="addTruck()">Add Truck</button>
+</section>
+
+<section class="table-section">
+  <h2>Attendance & Distribution</h2>
+  <table id="workTable"></table>
+</section>
+
+<section class="totals">
+  <h2>Totals</h2>
+  <div id="totalsOutput"></div>
+</section>
+
+<section class="graph">
+  <h2>Daily Earnings</h2>
+  <canvas id="earningsChart"></canvas>
+</section>
+
+<section class="finance">
+  <h2>Money Wisdom 💰</h2>
+  <p id="financeTip"></p>
+  <a href="https://www.cma.or.ke" target="_blank">Learn More</a>
+</section>
+
+<footer>
+  <button onclick="resetCycle()">Reset After Payment</button>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
