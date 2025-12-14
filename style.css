@@ -36,3 +36,26 @@ td, th {
   padding: 8px;
   text-align: center;
 }
+.payment-history button {
+  margin-top: 5px;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+.history-card {
+  border: 1px solid #ccc;
+  padding: 10px 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.history-card h3 {
+  margin: 0 0 5px 0;
+  font-size: 1.1em;
+}
+
+.history-card ul {
+  margin: 0;
+  padding-left: 20px;
+}
