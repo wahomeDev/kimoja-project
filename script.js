@@ -1,14 +1,34 @@
+// ================= STORAGE =================
+const STORAGE_KEY = "kimoja_elite_data";
+
+// ================= WORKERS =================
 const workers = [
   "Ngoronyo", "Sherif", "Scorpion", "Achievers", "Mwea"
 ];
 
+// ================= DATA =================
 let trucks = [];
 
+// Load saved data
+const savedData = localStorage.getItem(STORAGE_KEY);
+if (savedData) {
+  trucks = JSON.parse(savedData);
+}
+
+// ================= SAVE =================
+function saveData() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(trucks));
+}
+
+// ================= ADD TRUCK =================
 function addTruck() {
   const plate = document.getElementById("plate").value;
   const amount = Number(document.getElementById("amount").value);
 
-  if (!plate || !amount) return alert("Fill all fields");
+  if (!plate || !amount) {
+    alert("Fill all fields");
+    return;
+  }
 
   const truck = {
     plate,
@@ -17,9 +37,14 @@ function addTruck() {
   };
 
   trucks.push(truck);
+  saveData();
   renderTable();
+
+  document.getElementById("plate").value = "";
+  document.getElementById("amount").value = "";
 }
 
+// ================= TABLE =================
 function renderTable() {
   const table = document.getElementById("workTable");
   table.innerHTML = "";
@@ -31,12 +56,15 @@ function renderTable() {
 
   trucks.forEach((t, i) => {
     let row = `<tr><td>${t.plate}<br>Ksh ${t.amount}</td>`;
+
     t.attendance.forEach((a, j) => {
       row += `<td>
         <input type="checkbox"
+          ${a ? "checked" : ""}
           onchange="toggle(${i},${j})">
       </td>`;
     });
+
     row += "</tr>";
     table.innerHTML += row;
   });
@@ -44,12 +72,16 @@ function renderTable() {
   calculateTotals();
 }
 
+// ================= TOGGLE =================
 function toggle(truckIndex, workerIndex) {
   trucks[truckIndex].attendance[workerIndex] =
     !trucks[truckIndex].attendance[workerIndex];
+
+  saveData();
   calculateTotals();
 }
 
+// ================= TOTALS =================
 function calculateTotals() {
   let totals = workers.map(() => 0);
 
@@ -67,8 +99,14 @@ function calculateTotals() {
     workers.map((w, i) => `${w}: Ksh ${totals[i].toFixed(2)}`).join("<br>");
 }
 
+// ================= RESET =================
 function resetCycle() {
   if (!confirm("Reset after payment?")) return;
+
   trucks = [];
+  localStorage.removeItem(STORAGE_KEY);
   renderTable();
 }
+
+// Initial render
+renderTable();
