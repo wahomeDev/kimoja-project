@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <title>KIMOJA – ELITE Group</title>
   <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -36,19 +37,18 @@
   <h2>Totals</h2>
   <div id="totalsOutput"></div>
 </section>
+
 <section class="payment-history">
   <h2>Payment History 💼</h2>
   <div id="paymentHistoryContainer">
     <p>No payment history yet.</p>
   </div>
-
-  <!-- Optional toggle button -->
   <button onclick="toggleHistory()">Show/Hide History</button>
 </section>
 
-
 <section class="graph">
-  <h2>Daily Earnings</h2>
+  <h2>Worker Earnings</h2>
+  <button id="toggleChartBtn">Show Cumulative Earnings</button>
   <canvas id="earningsChart"></canvas>
 </section>
 
