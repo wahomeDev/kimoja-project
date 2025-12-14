@@ -14,9 +14,6 @@ const workers = [
   { id: "mwea", name: "Mwea", phone: "", total: 0 }
 ];
 
-  
-
-
 // ================= DATA =================
 let trucks = [];
 
@@ -33,11 +30,16 @@ function saveData() {
 
 // ================= ADD TRUCK =================
 function addTruck() {
-  const plate = document.getElementById("plate").value;
+  const plate = document.getElementById("plate").value.trim();
   const amount = Number(document.getElementById("amount").value);
 
-  if (!plate || !amount) {
-    alert("Fill all fields");
+  // Input validation
+  if (!plate) {
+    alert("Truck plate cannot be empty!");
+    return;
+  }
+  if (!amount || amount <= 0) {
+    alert("Truck amount must be greater than 0!");
     return;
   }
 
@@ -45,10 +47,9 @@ function addTruck() {
     plate,
     amount,
     attendance: workers.map(w => ({
-  workerId: w.id,
-  present: false
-}))
-
+      workerId: w.id,
+      present: false
+    }))
   };
 
   trucks.push(truck);
@@ -74,8 +75,10 @@ function renderTable() {
   trucks.forEach((t, i) => {
     let row = `<tr><td>${t.plate}<br>Ksh ${t.amount}</td>`;
 
+    // Attendance cells with zero-attendance highlight
     t.attendance.forEach((a, j) => {
-      row += `<td>
+      const highlightClass = a.present ? "" : "zero-attendance";
+      row += `<td class="${highlightClass}">
         <input type="checkbox"
           ${a.present ? "checked" : ""}
           onchange="toggle(${i},${j})">
@@ -87,19 +90,16 @@ function renderTable() {
   });
 
   calculateTotals();
+  renderChart(); // update chart whenever table changes
 }
-
 
 // ================= TOGGLE =================
 function toggle(truckIndex, workerIndex) {
   const record = trucks[truckIndex].attendance[workerIndex];
-record.present = !record.present;
-saveData();
-calculateTotals();
-
-
+  record.present = !record.present;
   saveData();
   calculateTotals();
+  renderChart(); // update chart whenever checkbox changes
 }
 
 // ================= TOTALS =================
@@ -122,7 +122,6 @@ function calculateTotals() {
     workers.map(w => `${w.name}: Ksh ${w.total.toFixed(2)}`).join("<br>");
 }
 
-
 // ================= RESET =================
 function resetCycle() {
   if (!confirm("Reset after payment?")) return;
@@ -131,13 +130,6 @@ function resetCycle() {
   localStorage.removeItem(STORAGE_KEY);
   renderTable();
 }
-
-// Initial render
-renderTable();
-// INITIAL LOAD
-renderTable();
-calculateTotals();
-renderPaymentHistory();
 
 // ================= PAYMENT HISTORY =================
 function renderPaymentHistory() {
@@ -186,7 +178,7 @@ function renderPaymentHistory() {
   });
 }
 
-
+// ================= CLOSE PAY CYCLE =================
 function closePayCycle(cycleName) {
   const snapshot = {
     cycle: cycleName,
@@ -199,17 +191,12 @@ function closePayCycle(cycleName) {
   };
 
   paymentHistory.push(snapshot);
-
-  localStorage.setItem(
-    "kimoja_payment_history",
-    JSON.stringify(paymentHistory)
-  );
+  localStorage.setItem("kimoja_payment_history", JSON.stringify(paymentHistory));
 
   resetCycle();
+  renderPaymentHistory();
+  renderChart(); // update chart after closing pay cycle
 }
-//render history after saving payment history
-    renderPaymentHistory();
-
 
 // ================= TOGGLE HISTORY =================
 function toggleHistory() {
@@ -217,4 +204,46 @@ function toggleHistory() {
   container.style.display = container.style.display === "none" ? "block" : "none";
 }
 
+// ================= DYNAMIC CHART =================
+let earningsChart; // global variable for chart
+
+function renderChart() {
+  const ctx = document.getElementById("earningsChart").getContext("2d");
+
+  const labels = workers.map(w => w.name);
+  const data = workers.map(w => w.total);
+
+  if (earningsChart) {
+    earningsChart.data.datasets[0].data = data;
+    earningsChart.update();
+  } else {
+    earningsChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Current Earnings (Ksh)',
+          data: data,
+          backgroundColor: '#4CAF50'
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          title: { display: true, text: 'Worker Earnings' }
+        },
+        scales: {
+          y: { beginAtZero: true }
+        }
+      }
+    });
+  }
+}
+
+// ================= INITIAL LOAD =================
+renderTable();
+calculateTotals();
+renderPaymentHistory();
+renderChart();
 
