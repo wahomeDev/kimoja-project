@@ -1,8 +1,5 @@
 // ================= STORAGE =================
-let paymentHistory = JSON.parse(
-  localStorage.getItem("kimoja_payment_history")
-) || [];
-
+let paymentHistory = JSON.parse(localStorage.getItem("kimoja_payment_history")) || [];
 const STORAGE_KEY = "kimoja_elite_data";
 
 // ================= WORKERS =================
@@ -63,6 +60,7 @@ function renderTable() {
 
   calculateTotals();
   renderChart();
+  showFinanceTip();
 }
 
 // ================= TOGGLE =================
@@ -72,6 +70,7 @@ function toggle(truckIndex, workerIndex) {
   saveData();
   calculateTotals();
   renderChart();
+  showFinanceTip();
 }
 
 // ================= TOTALS =================
@@ -131,6 +130,7 @@ function closePayCycle(cycleName) {
   resetCycle();
   renderPaymentHistory();
   renderChart();
+  showFinanceTip();
 }
 
 // ================= TOGGLE HISTORY =================
@@ -141,9 +141,10 @@ function toggleHistory() {
 
 // ================= DYNAMIC CHART =================
 let earningsChart;
+let showCumulative = false;
+
 function renderChart() {
   const ctx = document.getElementById("earningsChart").getContext("2d");
-  const labels = workers.map(w => w.name);
 
   const currentData = workers.map(w => w.total);
   const cumulativeData = workers.map(w => {
@@ -155,27 +156,67 @@ function renderChart() {
     return total;
   });
 
-  if (earningsChart) {
-    earningsChart.data.datasets[0].data = currentData;
-    earningsChart.data.datasets[1].data = cumulativeData;
-    earningsChart.update();
-  } else {
+  if (!earningsChart) {
     earningsChart = new Chart(ctx, {
       type: 'bar',
-      data: {
-        labels: labels,
-        datasets: [
-          { label: 'Current Earnings', data: currentData, backgroundColor: '#4CAF50' },
-          { label: 'Cumulative Earnings', data: cumulativeData, backgroundColor: '#2196F3' }
-        ]
-      },
+      data: { labels: workers.map(w => w.name), datasets: [{ label: 'Daily Earnings', data: currentData, backgroundColor: '#4CAF50' }] },
       options: {
         responsive: true,
-        plugins: { title: { display: true, text: 'Worker Earnings Overview' }, legend: { display: true, position: 'top' } },
+        plugins: {
+          title: { display: true, text: 'Worker Earnings Overview' },
+          tooltip: { callbacks: { label: ctx => `${ctx.label}: Ksh ${ctx.raw.toFixed(2)}` } }
+        },
         scales: { y: { beginAtZero: true } }
       }
     });
-  }
+  } else updateChartView();
+}
+
+function updateChartView() {
+  if (!earningsChart) return;
+
+  const currentData = workers.map(w => w.total);
+  const cumulativeData = workers.map(w => {
+    let total = 0;
+    paymentHistory.forEach(cycle => {
+      const workerData = cycle.workers.find(p => p.id === w.id);
+      if (workerData) total += workerData.amount;
+    });
+    return total;
+  });
+
+  earningsChart.data.datasets = [{
+    label: showCumulative ? 'Cumulative Earnings' : 'Daily Earnings',
+    data: showCumulative ? cumulativeData : currentData,
+    backgroundColor: showCumulative ? '#2196F3' : '#4CAF50'
+  }];
+
+  earningsChart.options.plugins.tooltip.callbacks.label = ctx => `${ctx.label}: Ksh ${ctx.raw.toFixed(2)}`;
+  earningsChart.update();
+}
+
+// Chart toggle button listener
+document.getElementById("toggleChartBtn").addEventListener("click", () => {
+  showCumulative = !showCumulative;
+  updateChartView();
+  document.getElementById("toggleChartBtn").textContent = showCumulative
+    ? "Show Daily Earnings"
+    : "Show Cumulative Earnings";
+});
+
+// ================= FINANCE TIPS =================
+const financeTips = [
+  "Save at least 10% of your earnings every week.",
+  "Keep a small emergency fund for unexpected expenses.",
+  "Track your daily earnings and spending.",
+  "Invest part of your income in safe, reliable instruments.",
+  "Avoid unnecessary borrowing and high-interest debt.",
+  "Set weekly goals and review your financial progress."
+];
+
+function showFinanceTip() {
+  const tip = financeTips[Math.floor(Math.random() * financeTips.length)];
+  document.getElementById("financeTip").textContent = tip;
 }
 
 // ================= INITIAL LOAD =================
@@ -183,3 +224,4 @@ renderTable();
 calculateTotals();
 renderPaymentHistory();
 renderChart();
+showFinanceTip();
