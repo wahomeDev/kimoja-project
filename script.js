@@ -137,6 +137,55 @@ renderTable();
 // INITIAL LOAD
 renderTable();
 calculateTotals();
+renderPaymentHistory();
+
+// ================= PAYMENT HISTORY =================
+function renderPaymentHistory() {
+  const container = document.getElementById("paymentHistoryContainer");
+  container.innerHTML = "";
+
+  if (!paymentHistory || paymentHistory.length === 0) {
+    container.innerHTML = "<p>No payment history yet.</p>";
+    return;
+  }
+
+  // Calculate cumulative totals
+  const cumulativeTotals = {};
+  workers.forEach(w => cumulativeTotals[w.name] = 0);
+  paymentHistory.forEach(cycle => {
+    cycle.workers.forEach(w => {
+      cumulativeTotals[w.name] += w.amount;
+    });
+  });
+
+  // Display cumulative totals at top
+  const aggregateDiv = document.createElement("div");
+  aggregateDiv.innerHTML = `<h3>Cumulative Totals</h3>` +
+    Object.entries(cumulativeTotals)
+      .map(([name, amount]) => `<p>${name}: Ksh ${amount.toFixed(2)}</p>`)
+      .join("");
+  container.appendChild(aggregateDiv);
+
+  // Render history cards (newest first)
+  const sortedHistory = [...paymentHistory].reverse();
+  sortedHistory.forEach(cycle => {
+    const card = document.createElement("div");
+    card.classList.add("history-card");
+
+    card.innerHTML = `<h3>${cycle.cycle} - ${cycle.date}</h3>`;
+
+    const list = document.createElement("ul");
+    cycle.workers.forEach(w => {
+      const li = document.createElement("li");
+      li.textContent = `${w.name}: Ksh ${w.amount.toFixed(2)}`;
+      list.appendChild(li);
+    });
+
+    card.appendChild(list);
+    container.appendChild(card);
+  });
+}
+
 
 function closePayCycle(cycleName) {
   const snapshot = {
@@ -158,4 +207,14 @@ function closePayCycle(cycleName) {
 
   resetCycle();
 }
+//render history after saving payment history
+    renderPaymentHistory();
+
+
+// ================= TOGGLE HISTORY =================
+function toggleHistory() {
+  const container = document.getElementById("paymentHistoryContainer");
+  container.style.display = container.style.display === "none" ? "block" : "none";
+}
+
 
