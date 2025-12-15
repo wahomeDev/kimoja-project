@@ -1,18 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>KIMOJA – ELITE Group</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<meta charset="UTF-8">
+<title>KIMOJA –group1 Group Dashboard</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 
 <header>
-  <h1>KIMOJA – ELITE GROUP</h1>
+  <h1>KIMOJA – ELITE GROUP (Group 1)</h1>
   <p>Fair Work • Fair Pay • Transparency</p>
-</header>
+
+  
+
+</header> <nav>
+  <a href="group1.html">ngoronyo</a> |
+  <a href="group2.html">sherif</a> |
+  <a href="group3.html">achievers</a> |
+</nav>
+
 
 <section class="cycle">
   <h2>Current Pay Cycle</h2>
@@ -20,22 +28,6 @@
     <option>Sat – Tue (Pay Wed)</option>
     <option>Wed – Fri (Pay Sat)</option>
   </select>
-</section>
-
-<section class="filters">
-  <h2>Filters & Search</h2>
-  <label>
-    From: <input type="date" id="filterFrom">
-  </label>
-  <label>
-    To: <input type="date" id="filterTo">
-  </label>
-  <label>
-    Worker:
-    <select id="filterWorker"><option value="">All</option></select>
-  </label>
-  <button onclick="applyFilters()">Apply</button>
-  <button onclick="resetFilters()">Reset</button>
 </section>
 
 <section class="truck-entry">
@@ -56,25 +48,24 @@
 </section>
 
 <section class="charts">
-  <h2>Charts 📊</h2>
+  <h2>Daily Earnings Chart</h2>
   <canvas id="dailyChart"></canvas>
+  <h2>Cumulative Earnings Chart</h2>
   <canvas id="cumulativeChart"></canvas>
 </section>
 
 <section class="payment-history">
   <h2>Payment History 💼</h2>
-  <div id="paymentHistoryContainer"></div>
+  <div id="paymentHistoryContainer"><p>No payment history yet.</p></div>
   <button onclick="toggleHistory()">Show/Hide History</button>
 </section>
 
 <section class="payslip">
-  <h2>Payslip & Export</h2>
-  <label>Worker:
-    <select id="workerSelect"></select>
-  </label>
-  <label>From: <input type="date" id="fromDate"></label>
-  <label>To: <input type="date" id="toDate"></label>
-  <button onclick="generatePayslip()">Generate</button>
+  <h2>Generate Payslip</h2>
+  <select id="workerSelect"></select>
+  <input type="date" id="fromDate">
+  <input type="date" id="toDate">
+  <button onclick="generatePayslip()">Show Payslip</button>
   <button onclick="exportPayslipCSV()">Export CSV</button>
   <button onclick="downloadPayslipPDF()">Download PDF</button>
   <div id="payslipOutput"></div>
@@ -87,7 +78,8 @@
 </section>
 
 <footer>
-  <button onclick="closePayCycle()">Close Pay Cycle & Reset</button>
+  <button onclick="closePayCycle()">Close Pay Cycle</button>
+  <button onclick="resetCycle()">Reset After Payment</button>
 </footer>
 
 <script src="script.js"></script>

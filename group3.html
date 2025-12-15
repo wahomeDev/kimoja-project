@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>KIMOJA – ngoronyo Group Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body data-group="group3">
+
+<header>
+  <h1>KIMOJA – Group Dashboard</h1>
+  <p>Fair Work • Fair Pay • Transparency</p>
+</header>
+
+<section class="truck-entry">
+  <h2>Add Truck</h2>
+  <input type="text" id="plate" placeholder="Number Plate">
+  <input type="number" id="amount" placeholder="Truck Amount">
+  <button onclick="addTruck()">Add Truck</button>
+</section>
+
+<section class="worker-entry">
+  <h2>Workers</h2>
+  <input type="text" id="newWorkerName" placeholder="New Worker Name">
+  <button onclick="addWorker()">Add Worker</button>
+  <button onclick="removeWorker()">Remove Worker</button>
+  <select id="workerSelect"></select>
+</section>
+
+<section class="table-section">
+  <h2>Attendance & Distribution</h2>
+  <table id="workTable"></table>
+</section>
+
+<section class="totals">
+  <h2>Totals</h2>
+  <div id="totalsOutput"></div>
+</section>
+
+<section class="graphs">
+  <h2>Daily Earnings</h2>
+  <canvas id="dailyChartGROUP1"></canvas>
+  <h2>Cumulative Earnings</h2>
+  <canvas id="cumulativeChartGROUP1"></canvas>
+</section>
+
+<section class="payment-history">
+  <h2>Payment History 💼</h2>
+  <div id="paymentHistoryContainer"></div>
+  <button onclick="toggleHistory()">Show/Hide History</button>
+</section>
+
+<section class="payslip-section">
+  <h2>Payslip Generation</h2>
+  <button onclick="generatePayslip()">Show Payslip</button>
+  <button onclick="exportPayslipCSV()">Export CSV</button>
+  <button onclick="downloadPayslipPDF()">Download PDF</button>
+  <div id="payslipOutput"></div>
+</section>
+
+<section class="finance">
+  <h2>Money Wisdom 💰</h2>
+  <p id="financeTip">“Save a little every day, and your wealth will grow.”</p>
+</section>
+
+<footer>
+  <button onclick="closePayCycle()">Close Pay Cycle & Reset</button>
+</footer>
+
+<script>
+  // ================= GROUP_ID =================
+  const GROUP_ID = "GROUP3"; // Change for each group: GROUP1, GROUP2, ... GROUP5
+</script>
+<script src="script.js"></script>
+
+</body>
+</html>
