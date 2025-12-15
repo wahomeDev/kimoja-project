@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <title>KIMOJA – ELITE Group</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
@@ -36,20 +35,42 @@
 <section class="totals">
   <h2>Totals</h2>
   <div id="totalsOutput"></div>
+  <button onclick="exportCSV()">Export CSV</button>
 </section>
 
 <section class="payment-history">
   <h2>Payment History 💼</h2>
-  <div id="paymentHistoryContainer"><p>No payment history yet.</p></div>
-  <button onclick="toggleHistory()">Show/Hide History</button>
-  <button onclick="exportPaymentHistoryCSV()">Export Payment History CSV</button>
+  <div id="paymentHistoryContainer"></div>
+  <button onclick="toggleHistory()">Show / Hide History</button>
+</section>
+<section class="payslips">
+  <h2>Payslips 🧾</h2>
+
+  <label>Select Worker:</label>
+  <select id="workerSelect"></select>
+
+  <label>From:</label>
+  <input type="date" id="fromDate">
+
+  <label>To:</label>
+  <input type="date" id="toDate">
+
+  <br><br>
+  <button onclick="generatePayslip()">Generate Payslip</button>
+  <button onclick="exportPayslipCSV()">Export CSV</button>
+
+  <div id="payslipOutput"></div>
 </section>
 
+
 <section class="graph">
-  <h2>Daily Earnings</h2>
-  <canvas id="earningsChart"></canvas>
-  <button id="toggleChartBtn">Show Cumulative Earnings</button>
+  <h2>Daily Earnings (Current Cycle)</h2>
+  <canvas id="dailyChart"></canvas>
+
+  <h2>Cumulative Earnings (All Time)</h2>
+  <canvas id="cumulativeChart"></canvas>
 </section>
+
 
 <section class="finance">
   <h2>Money Wisdom 💰</h2>
@@ -58,9 +79,12 @@
 </section>
 
 <footer>
-  <button onclick="resetCycle()">Reset After Payment</button>
+  <button onclick="closePayCycle()">Close Pay Cycle & Reset</button>
+
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="script.js"></script>
+
 </body>
 </html>

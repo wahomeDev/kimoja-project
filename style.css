@@ -252,3 +252,12 @@ footer button:hover {
   visibility: visible;
   opacity: 1;
 }
+.zero-attendance {
+  background-color: #ffe6e6;
+}
+
+button {
+  margin-top: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+}

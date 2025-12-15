@@ -1,35 +1,84 @@
-# KIMOJA – ELITE Group
+# KIMOJA – ELITE Group Earnings Dashboard
 
-**Description:**  
-Web app to manage truck attendance and worker payment distribution with full transparency.
+A professional web-based dashboard for managing truck work attendance,
+fair payment distribution, and transparent earnings tracking.
 
-## Features
+## Live Demo
 
-- Add trucks with amounts
-- Track worker attendance per truck
-- Live calculation of totals per worker
-- Reset pay cycle after payment
-- Payment History:
-  - Shows all past pay cycles
-  - Displays cumulative totals per worker
-  - Newest cycles appear first
-  - Toggle visibility (Show/Hide button)
-- Highlight workers with zero attendance (light red background)
-- Optional: Daily earnings graph (planned next)
+🔗 https://wahomeDev.github.io/kimoja-dashboard/
 
-## Usage
+---
 
-1. Add truck plate and amount, then click "Add Truck".
-2. Mark attendance by checking the boxes for workers present.
-3. Totals update automatically.
-4. Close pay cycle to save snapshot to Payment History.
-5. Toggle Payment History visibility using the button.
-6. Reset cycle after payment if necessary.
+## Overview
 
-## Technical Details
+This application helps work groups fairly distribute truck earnings
+among workers based on attendance, while keeping a clear payment history.
 
-- Uses **LocalStorage** to persist truck data and payment history.
-- `renderTable()` handles attendance display and zero-attendance highlights.
-- `calculateTotals()` computes totals automatically.
-- `renderPaymentHistory()` displays cumulative totals and past cycles.
-- `toggleHistory()` allows hiding/showing the Payment History section.
+It is designed for:
+- Transparency
+- Accuracy
+- Ease of use
+- Mobile friendliness
+
+---
+
+## Key Features
+
+### Truck & Attendance Management
+- Add trucks with plate number and amount
+- Mark worker attendance using checkboxes
+- Automatic equal sharing among present workers
+
+### Earnings Calculation
+- Real-time calculation of worker totals
+- Zero-attendance visual highlighting
+- Tooltip display of worker earnings
+
+### Visual Analytics
+- Bar chart showing **earnings per worker**
+- Chart updates live as attendance changes
+
+### Payment History
+- Save completed pay cycles
+- View cumulative earnings across cycles
+- Toggle visibility for clarity
+
+### Finance Education
+- Random money wisdom tips on each load
+- External learning resource links
+
+### Technical Features
+- Fully client-side (no backend)
+- Uses LocalStorage for persistence
+- Responsive design for mobile & desktop
+- Hosted via GitHub Pages
+
+---
+
+## How to Use
+
+1. Select the current pay cycle
+2. Add a truck with plate number and amount
+3. Tick workers who attended
+4. View totals and earnings graph
+5. Close and reset cycle after payment
+6. Review payment history anytime
+
+---
+
+## Tech Stack
+
+- HTML5
+- CSS3 (Responsive design)
+- Vanilla JavaScript
+- Chart.js (Data visualization)
+- GitHub Pages (Hosting)
+
+---
+
+## Local Development
+
+```bash
+git clone https://github.com/wahomeDev/kimoja-dashboard.git
+cd kimoja-dashboard
+# Open index.html or use Live Server
