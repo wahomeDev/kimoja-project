@@ -1,263 +1,32 @@
-/* ================= GLOBAL ================= */
 body {
   font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0 20px;
-  background-color: #f5f5f5;
-  color: #333;
+  margin:0; padding:0 20px; background:#f5f5f5; color:#333;
 }
 
-header {
-  text-align: center;
-  padding: 20px 0;
-  background-color: #1f2937;
-  color: #fff;
-}
+header { text-align:center; padding:20px 0; background:#1f2937; color:#fff; }
+header h1 { margin:0; font-size:28px; }
+header p { margin:5px 0 0 0; font-size:14px; font-weight:300; }
 
-header h1 {
-  margin: 0;
-  font-size: 28px;
-}
+section { margin:20px 0; padding:15px; background:#fff; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,0.1); }
+h2 { margin-top:0; font-size:20px; border-bottom:2px solid #eee; padding-bottom:5px; }
 
-header p {
-  margin: 5px 0 0;
-  font-size: 14px;
-  font-weight: 300;
-}
+input, select { padding:6px; margin-right:8px; border-radius:5px; border:1px solid #ccc; }
+button { padding:6px 12px; border:none; border-radius:5px; cursor:pointer; margin-top:5px; }
 
-/* ================= SECTIONS ================= */
-section {
-  margin: 20px 0;
-  padding: 15px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
+.truck-entry button { background:#4CAF50; color:#fff; }
+.truck-entry button:hover { background:#45a049; }
+.payment-history button { background:#2196F3; color:#fff; }
+.payment-history button:hover { background:#1976D2; }
+footer button { background:#f44336; color:#fff; }
+footer button:hover { background:#d32f2f; }
 
-h2 {
-  margin-top: 0;
-  font-size: 20px;
-  border-bottom: 2px solid #eee;
-  padding-bottom: 5px;
-}
+table { width:100%; border-collapse:collapse; margin-top:10px; }
+th, td { padding:10px; text-align:center; border:1px solid #ddd; font-size:14px; }
+th { background:#1f2937; color:#fff; }
+.zero-attendance { background:#ffe6e6; color:#666; }
 
-/* ================= TRUCK ENTRY ================= */
-.truck-entry input {
-  padding: 8px;
-  margin-right: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  width: 150px;
-}
-
-.truck-entry button {
-  padding: 8px 15px;
-  border: none;
-  border-radius: 5px;
-  background-color: #4CAF50;
-  color: #fff;
-  cursor: pointer;
-}
-
-.truck-entry button:hover {
-  background-color: #45a049;
-}
-
-/* ================= TABLE ================= */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-}
-
-th, td {
-  padding: 10px;
-  text-align: center;
-  border: 1px solid #ddd;
-  font-size: 14px;
-}
-
-th {
-  background-color: #1f2937;
-  color: #fff;
-}
-
-/* ================= COLOR CLASSES ================= */
-.top-earner {
-  background-color: #4CAF50;
-  color: #fff;
-}
-
-.mid-earner {
-  background-color: #FFEB3B;
-  color: #333;
-}
-
-.low-earner {
-  background-color: #F44336;
-  color: #fff;
-}
-
-.zero-attendance {
-  background-color: #ccc !important;
-  color: #666;
-}
-
-/* ================= TOTALS ================= */
-.totals div {
-  font-size: 16px;
-  font-weight: bold;
-}
-
-/* ================= PAYMENT HISTORY ================= */
-.payment-history button {
-  margin-top: 10px;
-  margin-right: 10px;
-  padding: 6px 12px;
-  background-color: #2196F3;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.payment-history button:hover {
-  background-color: #1976D2;
-}
-
-.history-card {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 10px;
-  margin: 10px 0;
-  background-color: #fafafa;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-}
-
-.history-card h3 {
-  margin: 0 0 5px 0;
-  font-size: 16px;
-}
-
-.history-card ul {
-  list-style-type: none;
-  padding-left: 0;
-  margin: 0;
-}
-
-.history-card li {
-  font-size: 14px;
-  margin-bottom: 3px;
-}
-
-/* ================= CHART ================= */
-canvas {
-  width: 100% !important;
-  max-height: 400px;
-  margin-top: 10px;
-}
-
-/* ================= FINANCE ================= */
-.finance p {
-  font-style: italic;
-  margin: 5px 0;
-}
-
-.finance a {
-  display: inline-block;
-  margin-top: 5px;
-  color: #2196F3;
-  text-decoration: none;
-}
-
-.finance a:hover {
-  text-decoration: underline;
-}
-
-/* ================= FOOTER ================= */
-footer {
-  text-align: center;
-  margin: 20px 0;
-}
-
-footer button {
-  padding: 8px 20px;
-  border: none;
-  border-radius: 5px;
-  background-color: #f44336;
-  color: #fff;
-  cursor: pointer;
-}
-
-footer button:hover {
-  background-color: #d32f2f;
-}
-/* ================= RESPONSIVE LAYOUT ================= */
-@media (max-width: 768px) {
-  table, thead, tbody, th, td, tr {
-    display: block;
-  }
-  
-  thead tr {
-    display: none; /* hide headers on mobile */
-  }
-
-  tr {
-    margin-bottom: 15px;
-    border-bottom: 2px solid #eee;
-  }
-
-  td {
-    text-align: right;
-    padding-left: 50%;
-    position: relative;
-  }
-
-  td::before {
-    content: attr(data-label);
-    position: absolute;
-    left: 10px;
-    font-weight: bold;
-    text-align: left;
-  }
-}
-
-/* ================= TOOLTIP ================= */
-.tooltip {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-}
-
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: auto;
-  max-width: 150px;
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px;
-  position: absolute;
-  z-index: 10;
-  bottom: 125%; 
-  left: 50%;
-  margin-left: -75px;
-  opacity: 0;
-  transition: opacity 0.3s;
-  font-size: 12px;
-}
-
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-  opacity: 1;
-}
-.zero-attendance {
-  background-color: #ffe6e6;
-}
-
-button {
-  margin-top: 8px;
-  padding: 6px 10px;
-  cursor: pointer;
-}
+.history-card { border:1px solid #ddd; border-radius:8px; padding:10px; margin:10px 0; background:#fafafa; }
+canvas { width:100% !important; max-height:400px; margin-top:10px; }
+.top-earner { background-color: #4CAF50; color: #fff; }
+.mid-earner { background-color: #FFEB3B; color: #333; }
+.low-earner { background-color: #F44336; color: #fff; }
